@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChronoQuest 🏺 | Ancient Civilization Guessing Game</title>
+  <meta name="description" content="Decode the Past. Discover the Civilization. Travel across ancient worlds, examine artifacts, follow historical clues, and uncover lost civilizations.">
+
+  <!-- Favicon icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏺</text></svg>">
+
+  <!-- Leaflet CSS for Ancient World Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Google Fonts: Cinzel Decorative, Cinzel, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Core Theme & Stylesheets -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/animations.css">
+</head>
+<body>
+  <!-- Canvas Layer for Ambient Embers & Victory Particles -->
+  <canvas id="particle-canvas"></canvas>
+
+  <div id="app-root">
+    <!-- Main Ancient Header & Navigation -->
+    <header class="ancient-nav">
+      <div class="nav-container">
+        <!-- Brand / Logo -->
+        <a class="brand-wrap" data-nav="home" href="#home" aria-label="ChronoQuest Home">
+          <span class="brand-icon">🏺</span>
+          <div class="brand-text">
+            <span class="brand-title">CHRONOQUEST</span>
+            <span class="brand-tagline">Decode the Past • Discover the Civilization</span>
+          </div>
+        </a>
+
+        <!-- Navigation Menu -->
+        <nav>
+          <ul class="nav-links" id="nav-links">
+            <li><button class="nav-item-btn active" data-nav="home">🏠 Home</button></li>
+            <li><button class="nav-item-btn" data-nav="modes">🎮 Play Quest</button></li>
+            <li><button class="nav-item-btn" data-nav="map">🗺️ World Map</button></li>
+            <li><button class="nav-item-btn" data-nav="explorer">🏛️ Civilizations</button></li>
+            <li><button class="nav-item-btn" data-nav="achievements">🏆 Achievements</button></li>
+            <li><button class="nav-item-btn" data-nav="daily">🌅 Daily Quest</button></li>
+          </ul>
+        </nav>
+
+        <!-- Right Side Utility Actions -->
+        <div class="nav-actions">
+          <!-- Audio Toggle -->
+          <button class="icon-button" id="btn-audio-toggle" title="Toggle Soundscapes" aria-label="Toggle Audio">
+            <span id="audio-icon">🔊</span>
+          </button>
+
+          <!-- Ask the Historian Button -->
+          <button class="icon-button" id="btn-open-historian" title="Ask the AI Historian" aria-label="Ask Historian">
+            💬
+          </button>
+
+          <!-- Profile Badge Chip -->
+          <div class="nav-profile-chip" id="nav-profile-chip" data-nav="profile" title="View Explorer Profile">
+            <span style="font-size: 1.1rem;">👤</span>
+            <div>
+              <div class="profile-chip-xp" id="nav-profile-xp">0 XP</div>
+              <div class="profile-chip-rank" id="nav-profile-rank">Neophyte</div>
+            </div>
+          </div>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Navigation Menu">
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- App Views Container -->
+    <div class="view-container">
+
+      <!-- ===================================================================
+           1. HOME VIEW (Immersive Landing Page)
+           =================================================================== -->
+      <section class="app-view active" id="view-home">
+        <div class="hero-landing">
+          <div class="hero-content">
+            <div class="hero-seal">🏺</div>
+            <h1 class="hero-title">CHRONOQUEST</h1>
+            <h2 class="hero-subtitle">Decode the Past. Discover the Civilization.</h2>
+            <p class="hero-description">
+              Travel across ancient worlds, examine authentic archaeological artifacts, follow progressive historical clues, and uncover lost civilizations from the Indus to the Andes.
+            </p>
+            <div class="hero-button-group">
+              <button class="btn-primary" data-nav="modes">
+                ⚔️ Enter the Quest
+              </button>
+              <button class="btn-secondary" data-nav="explorer">
+                📜 Explore Civilizations
+              </button>
+              <button class="btn-secondary" id="hero-btn-artifacts">
+                🏺 Artifact Archive
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           2. MODE SELECTION VIEW
+           =================================================================== -->
+      <section class="app-view" id="view-modes">
+        <div class="view-header">
+          <h2 class="view-header-title">CHOOSE YOUR EXPEDITION</h2>
+          <p class="view-header-desc">Select an archaeological quest and configure your expedition difficulty.</p>
+        </div>
+
+        <!-- Difficulty Selector Ribbon -->
+        <div class="difficulty-panel">
+          <div class="difficulty-label">
+            <span>⚙️ Difficulty Level:</span>
+          </div>
+          <div class="difficulty-buttons">
+            <button class="diff-btn" data-diff="Easy">Easy (40s)</button>
+            <button class="diff-btn active" data-diff="Medium">Medium (30s)</button>
+            <button class="diff-btn" data-diff="Hard">Hard (20s)</button>
+            <button class="diff-btn" data-diff="Legendary">🔥 Legendary (1 Clue)</button>
+          </div>
+        </div>
+
+        <!-- Quest Mode Cards -->
+        <div class="modes-grid">
+          <!-- Mode 1: Guess the Civilization -->
+          <div class="mode-card" data-launch-mode="civilization">
+            <div class="mode-card-icon">🏛️</div>
+            <h3 class="mode-card-title">Guess the Civilization</h3>
+            <p class="mode-card-desc">
+              The flagship quest. Examine ancient landscapes, decode progressive historical clues, and guess the civilization before time runs out.
+            </p>
+            <button class="btn-primary" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">Start Quest &rarr;</button>
+          </div>
+
+          <!-- Mode 2: Artifact Hunt -->
+          <div class="mode-card" data-launch-mode="artifact">
+            <div class="mode-card-icon">🏺</div>
+            <h3 class="mode-card-title">Artifact Hunt</h3>
+            <p class="mode-card-desc">
+              Inspect coins, pottery, seals, and statues from world museums. Match the relic to its civilization to reveal its full dossier.
+            </p>
+            <button class="btn-secondary" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">Begin Hunt &rarr;</button>
+          </div>
+
+          <!-- Mode 3: Identify the Monument -->
+          <div class="mode-card" data-launch-mode="monument">
+            <div class="mode-card-icon">🗿</div>
+            <h3 class="mode-card-title">Identify the Monument</h3>
+            <p class="mode-card-desc">
+              Test your knowledge of world-wonder temples, step pyramids, and ancient citadels across three continents.
+            </p>
+            <button class="btn-secondary" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">Examine Wonders &rarr;</button>
+          </div>
+
+          <!-- Mode 4: Ancient World Map -->
+          <div class="mode-card" data-nav="map">
+            <div class="mode-card-icon">🗺️</div>
+            <h3 class="mode-card-title">Ancient World Map</h3>
+            <p class="mode-card-desc">
+              Traverse an interactive antique world map pinpointing archaeological centers and major excavated sites.
+            </p>
+            <button class="btn-outline" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">Open Map &rarr;</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           3. GAME ARENA VIEW (Playing Main Quest, Artifact, or Monument)
+           =================================================================== -->
+      <section class="app-view" id="view-game">
+        <div class="game-arena">
+          <!-- Header Bar: Round, Timer, Score -->
+          <div class="arena-header">
+            <div class="arena-round-badge" id="arena-round-badge">ROUND 01 / 05</div>
+            <div class="arena-timer-wrap" id="arena-timer-wrap">
+              <span>⏱</span>
+              <span id="arena-timer-display">00:30</span>
+            </div>
+            <div class="arena-score-wrap">
+              <span>🏆 Score:</span>
+              <span id="arena-score-display">0</span>
+            </div>
+          </div>
+
+          <!-- Countdown Pressure Bar -->
+          <div class="timer-bar-container">
+            <div class="timer-bar-fill" id="timer-bar-fill"></div>
+          </div>
+
+          <!-- Historical Image Card -->
+          <div class="arena-image-card">
+            <div class="arena-image-wrap">
+              <img src="" alt="Historical Subject" class="arena-image" id="arena-image">
+              <div class="arena-image-overlay">
+                <span class="arena-subject-title" id="arena-subject-title">Archaeological Site</span>
+                <span class="arena-source-pill" id="arena-source-pill">
+                  📷 <a href="#" target="_blank" rel="noopener noreferrer" id="arena-source-link">Wikimedia Commons</a>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clues Box -->
+          <div class="arena-clues-container">
+            <div class="clues-header">
+              <div class="clues-header-title">
+                <span>📜 Historical Clues:</span>
+              </div>
+              <div class="potential-points-badge" id="potential-points-badge">
+                ✨ Worth: 100 XP
+              </div>
+            </div>
+
+            <div class="clues-list" id="clues-list">
+              <!-- Clue items populated dynamically -->
+            </div>
+
+            <!-- Clue Utility Actions -->
+            <div class="clue-actions">
+              <button class="btn-reveal-clue" id="btn-reveal-clue">
+                🔍 Reveal Next Clue (-25 XP Value)
+              </button>
+              <button class="btn-hint" id="btn-request-hint">
+                💡 Ask AI Hint (-15 XP)
+              </button>
+            </div>
+
+            <div class="hint-callout" id="hint-callout" style="display: none;">
+              <span>💡</span>
+              <div id="hint-text"></div>
+            </div>
+          </div>
+
+          <!-- Question Prompt -->
+          <h3 class="arena-prompt" id="arena-prompt">Which civilization is associated with this subject?</h3>
+
+          <!-- Options Grid -->
+          <div class="options-grid" id="options-grid">
+            <!-- 4 Multiple choice options populated dynamically -->
+          </div>
+
+          <!-- Feedback Dossier Banner (Visible after answer/timeout) -->
+          <div class="feedback-banner" id="feedback-banner" style="display: none;">
+            <div class="feedback-header">
+              <h3 class="feedback-title" id="feedback-title">Correct Discovery!</h3>
+              <span class="feedback-xp-badge" id="feedback-xp-badge">+100 XP</span>
+            </div>
+            <p class="feedback-explanation" id="feedback-explanation"></p>
+
+            <!-- Optional Artifact Revealed Extra Details -->
+            <div class="artifact-revealed-dossier" id="artifact-revealed-dossier" style="display: none;">
+              <!-- Populated if playing Artifact Hunt -->
+            </div>
+
+            <button class="btn-primary btn-next-round" id="btn-next-round">
+              Continue to Next Round &rarr;
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           4. ANCIENT WORLD MAP VIEW
+           =================================================================== -->
+      <section class="app-view" id="view-map">
+        <div class="view-header">
+          <h2 class="view-header-title">ANCIENT WORLD MAP</h2>
+          <p class="view-header-desc">
+            Explore archaeological cradles across the globe. Click on any golden seal to open historical dossiers and excavation sites.
+          </p>
+        </div>
+
+        <div class="map-view-layout">
+          <div id="world-map-container"></div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           5. CIVILIZATION EXPLORER VIEW (Encyclopedia)
+           =================================================================== -->
+      <section class="app-view" id="view-explorer">
+        <!-- Rendered dynamically by explorer.js -->
+      </section>
+
+      <!-- ===================================================================
+           6. ACHIEVEMENTS VIEW
+           =================================================================== -->
+      <section class="app-view" id="view-achievements">
+        <div class="view-header">
+          <h2 class="view-header-title">COLLECTIBLE ACHIEVEMENTS</h2>
+          <p class="view-header-desc">Unlock badges as you decode artifacts, explore civilizations, and conquer time.</p>
+        </div>
+
+        <div class="achievements-grid" id="achievements-grid">
+          <!-- Populated dynamically from storage.js -->
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           7. PLAYER PROFILE VIEW
+           =================================================================== -->
+      <section class="app-view" id="view-profile">
+        <div class="view-header">
+          <h2 class="view-header-title">EXPLORER DOSSIER</h2>
+          <p class="view-header-desc">Your journey across the ancient world recorded in the Chrono Codex.</p>
+        </div>
+
+        <div class="profile-codex">
+          <div class="profile-header">
+            <div class="profile-avatar">🏺</div>
+            <div style="flex: 1;">
+              <div class="profile-name-edit-wrap">
+                <h3 class="profile-name" id="profile-name-display">SHREEYA</h3>
+                <button class="btn-edit-name" id="btn-edit-name" title="Change Name">✏️</button>
+              </div>
+              <div class="profile-rank" id="profile-rank-display">Level 1 • Neophyte Excavator</div>
+              <div class="profile-xp-bar-wrap">
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--gold-light);">
+                  <span id="profile-xp-text">0 XP</span>
+                  <span id="profile-next-rank-text">Next Rank: 200 XP</span>
+                </div>
+                <div class="xp-bar-bg">
+                  <div class="xp-bar-fill" id="profile-xp-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-stats-grid">
+            <div class="stat-box">
+              <div class="stat-value" id="stat-accuracy">0%</div>
+              <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-completed">0</div>
+              <div class="stat-label">Questions Completed</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-civs">0 / 15</div>
+              <div class="stat-label">Civilizations Unlocked</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-artifacts">0</div>
+              <div class="stat-label">Artifacts Identified</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-monuments">0</div>
+              <div class="stat-label">Monuments Mastered</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="stat-high-score">0</div>
+              <div class="stat-label">Highest Score</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           8. DAILY QUEST VIEW
+           =================================================================== -->
+      <section class="app-view" id="view-daily">
+        <div class="view-header">
+          <h2 class="view-header-title">🌅 DAILY HISTORICAL QUEST</h2>
+          <p class="view-header-desc">Every 24 hours brings a special historical challenge. You get one attempt to earn +200 bonus XP.</p>
+        </div>
+
+        <div class="hero-landing" style="min-height: 400px; max-width: 800px; margin: 0 auto;">
+          <div class="hero-content">
+            <div class="hero-seal">🌅</div>
+            <h3 class="hero-title" style="font-size: 2rem;">TODAY'S EXPEDITION</h3>
+            <p class="hero-description" id="daily-status-desc">
+              Test your knowledge against today's enigma. A single attempt with bonus rewards awaits.
+            </p>
+            <div id="daily-action-area">
+              <button class="btn-primary" id="btn-start-daily">
+                Embark on Daily Quest (+200 XP)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 1: ASK THE AI HISTORIAN
+       ===================================================================== -->
+  <div class="modal-overlay" id="historian-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">💬 Ask the Chrono Historian</h3>
+        <button class="modal-close-btn" id="btn-close-historian">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Inquire about ancient urban planning, undeciphered scripts, engineering marvels, or artifacts grounded in the archaeological record.
+        </p>
+
+        <!-- Suggested Quick Questions -->
+        <div class="historian-suggestions" id="historian-suggestions">
+          <button class="suggestion-chip">Why were Indus Valley cities famous for drainage?</button>
+          <button class="suggestion-chip">How did the Inca build stone walls without mortar?</button>
+          <button class="suggestion-chip">What was the secret of the Iron Pillar of Delhi?</button>
+          <button class="suggestion-chip">Why was the Rosetta Stone so historically crucial?</button>
+        </div>
+
+        <!-- Chat Conversation Log -->
+        <div class="historian-chat-log" id="historian-chat-log">
+          <div class="chat-bubble historian-msg">
+            Greetings, explorer. I am the Royal Epigraphist of the ChronoQuest Archives. Ask me regarding any civilization, excavated city, or ancient artifact!
+          </div>
+        </div>
+
+        <!-- User Question Input -->
+        <div class="historian-input-wrap">
+          <input type="text" id="historian-input" placeholder="Ask a question about ancient history...">
+          <button class="btn-primary" id="btn-send-historian" style="padding: 0.75rem 1.2rem;">Ask</button>
+        </div>
+
+        <!-- Optional Gemini API Key Drawer -->
+        <details style="margin-top: 1.2rem; font-size: 0.78rem; color: var(--text-muted);">
+          <summary style="cursor: pointer; color: var(--gold-light);">⚙️ Optional: Connect Live Gemini API Key</summary>
+          <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem;">
+            <input type="password" id="gemini-key-input" placeholder="Paste Gemini API Key..." style="flex: 1; background: var(--bg-stone); border: 1px solid var(--border-subtle); color: #fff; padding: 0.4rem; border-radius: 4px;">
+            <button class="btn-outline" id="btn-save-gemini-key">Save</button>
+          </div>
+          <p style="margin-top: 0.3rem;">ChronoQuest includes an offline historical synthesizer, so an API key is completely optional!</p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: QUEST COMPLETE CINEMATIC SCREEN
+       ===================================================================== -->
+  <div class="modal-overlay" id="quest-complete-modal">
+    <div class="modal-card" style="max-width: 700px;">
+      <div class="quest-complete-screen">
+        <div class="result-seal">🏺</div>
+        <h2 class="result-title">QUEST COMPLETE</h2>
+        <p class="result-subtitle">YOUR JOURNEY ENDS... FOR NOW.</p>
+
+        <div class="result-stats-board">
+          <div class="stat-box">
+            <div class="stat-value" id="result-final-score">750</div>
+            <div class="stat-label">Final Score</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="result-accuracy">80%</div>
+            <div class="stat-label">Accuracy</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="result-time">01:45</div>
+            <div class="stat-label">Time Elapsed</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="result-rank-title">Time Explorer</div>
+            <div class="stat-label">Explorer Rank</div>
+          </div>
+        </div>
+
+        <div class="result-button-row">
+          <button class="btn-primary" id="btn-result-play-again">Play Again</button>
+          <button class="btn-secondary" id="btn-result-explore-history">Explore History</button>
+          <button class="btn-secondary" id="btn-result-view-artifacts">View Artifacts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container for Unlocked Achievements -->
+  <div id="toast-container"></div>
+
+  <!-- Leaflet JS Library -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Application Main Controller (ES Module) -->
+  <script type="module" src="app/main.js"></script>
+</body>
+</html>
