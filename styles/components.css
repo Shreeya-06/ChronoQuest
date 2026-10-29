@@ -1,0 +1,1611 @@
+/**
+ * ChronoQuest - Component Design System
+ * Buttons, Game Arena, Clue Cards, Modals, Leaflet styling, and Explorer
+ */
+
+/* ==========================================================================
+   1. HERO LANDING SECTION
+   ========================================================================== */
+.hero-landing {
+  position: relative;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-ambient);
+  background: 
+    linear-gradient(180deg, rgba(14, 12, 10, 0.72) 0%, rgba(14, 12, 10, 0.94) 100%),
+    url('https://commons.wikimedia.org/wiki/Special:FilePath/Mohenjo-daro.jpg?width=1200') center/cover no-repeat;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 5;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero-seal {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+  animation: floatSubtle 4s ease-in-out infinite;
+}
+
+.hero-title {
+  font-family: var(--font-decorative);
+  font-size: clamp(2.5rem, 6vw, 4.8rem);
+  font-weight: 700;
+  color: var(--gold-primary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 0 35px rgba(212, 175, 55, 0.45);
+}
+
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  color: var(--text-parchment);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.2rem;
+}
+
+.hero-description {
+  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
+  color: var(--text-muted);
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.hero-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+/* ==========================================================================
+   2. BUTTON STYLES
+   ========================================================================== */
+.btn-primary {
+  background: linear-gradient(135deg, #e5c158, #d4af37 60%, #b38728);
+  color: #0d0a07;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  border: 1px solid var(--gold-bright);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.55);
+  background: linear-gradient(135deg, #fff0a8, #e5c158 60%, #c59b27);
+}
+
+.btn-secondary {
+  background: rgba(31, 26, 20, 0.85);
+  color: var(--text-parchment);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.95rem 1.8rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-gold);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+}
+
+.btn-secondary:hover {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: rgba(45, 37, 28, 0.9);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-outline:hover {
+  border-color: var(--border-gold);
+  color: var(--text-ivory);
+}
+
+/* ==========================================================================
+   3. MODE SELECTOR & DIFFICULTY SELECTOR
+   ========================================================================== */
+.view-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.view-header-title {
+  font-size: 2.4rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.5rem;
+}
+
+.view-header-desc {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
+.modes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.mode-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  opacity: 0;
+  transition: var(--transition-normal);
+}
+
+.mode-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-gold);
+  background: var(--bg-card-hover);
+}
+
+.mode-card:hover::before {
+  opacity: 1;
+}
+
+.mode-card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.mode-card-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.6rem;
+}
+
+.mode-card-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+/* Difficulty Selector Ribbon */
+.difficulty-panel {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.difficulty-label {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.difficulty-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.diff-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-parchment);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.diff-btn:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-bright);
+}
+
+.diff-btn.active {
+  background: var(--gold-primary);
+  color: var(--bg-darkest);
+  font-weight: 700;
+  border-color: var(--gold-bright);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.diff-btn[data-diff="Legendary"].active {
+  background: linear-gradient(135deg, #e52d27, #b31217);
+  color: #fff;
+  border-color: #ff5e62;
+  box-shadow: 0 0 20px rgba(229, 45, 39, 0.5);
+}
+
+/* ==========================================================================
+   4. GAME ARENA (Main Quest, Artifact & Monument Modes)
+   ========================================================================== */
+.game-arena {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Arena Header & Stats */
+.arena-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.arena-round-badge {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--gold-primary);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.arena-timer-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-ivory);
+}
+
+.timer-warning {
+  color: #ff5252 !important;
+  animation: pulseWarning 0.8s infinite alternate;
+}
+
+.arena-score-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+/* Timer Progress Bar */
+.timer-bar-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-bright), var(--gold-primary));
+  width: 100%;
+  transition: width 1s linear;
+}
+
+/* Historical Image Display */
+.arena-image-card {
+  position: relative;
+  background: #000;
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1.8rem;
+  box-shadow: var(--shadow-ambient);
+}
+
+.arena-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  background: #0c0a08;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.arena-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.arena-image-card:hover .arena-image {
+  transform: scale(1.02);
+}
+
+.arena-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  background: linear-gradient(0deg, rgba(14, 12, 10, 0.95) 0%, rgba(14, 12, 10, 0.5) 70%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.arena-subject-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text-ivory);
+}
+
+.arena-source-pill {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.arena-source-pill a {
+  color: var(--gold-light);
+  text-decoration: none;
+}
+
+.arena-source-pill a:hover {
+  text-decoration: underline;
+}
+
+/* Progressive Clue Box */
+.arena-clues-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.clues-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.clues-header-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.potential-points-badge {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 16px;
+  font-weight: 700;
+}
+
+.clues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.2rem;
+}
+
+.clue-item {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--gold-primary);
+  padding: 0.85rem 1.2rem;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  animation: slideInLeft 0.3s ease-out;
+}
+
+.clue-number {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--gold-primary);
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.clue-text {
+  font-size: 0.95rem;
+  color: var(--text-parchment);
+  line-height: 1.5;
+}
+
+.clue-actions {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.btn-reveal-clue {
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px dashed var(--border-gold);
+  color: var(--gold-light);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-reveal-clue:hover:not(:disabled) {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--gold-bright);
+}
+
+.btn-reveal-clue:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-hint {
+  background: rgba(194, 82, 56, 0.1);
+  border: 1px solid rgba(194, 82, 56, 0.4);
+  color: #ff9e80;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-hint:hover {
+  background: rgba(194, 82, 56, 0.25);
+}
+
+.hint-callout {
+  margin-top: 0.8rem;
+  background: rgba(194, 82, 56, 0.12);
+  border: 1px solid rgba(194, 82, 56, 0.4);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  color: #ffccbc;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Question Prompt */
+.arena-prompt {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--text-ivory);
+  margin-bottom: 1.2rem;
+}
+
+/* Options Grid */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.option-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1.1rem 1.2rem;
+  color: var(--text-parchment);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.option-prefix {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-gold);
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-gold);
+}
+
+.option-btn.correct {
+  background: rgba(46, 125, 50, 0.35) !important;
+  border-color: #4caf50 !important;
+  color: #a5d6a7 !important;
+  box-shadow: 0 0 25px rgba(76, 175, 80, 0.4) !important;
+}
+
+.option-btn.correct .option-prefix {
+  border-color: #4caf50;
+  background: #2e7d32;
+  color: #fff;
+}
+
+.option-btn.wrong {
+  background: rgba(198, 40, 40, 0.35) !important;
+  border-color: #e53935 !important;
+  color: #ef9a9a !important;
+  box-shadow: 0 0 25px rgba(229, 57, 53, 0.4) !important;
+}
+
+.option-btn.wrong .option-prefix {
+  border-color: #e53935;
+  background: #c62828;
+  color: #fff;
+}
+
+.option-btn:disabled {
+  cursor: default;
+}
+
+/* Feedback Dossier Banner */
+.feedback-banner {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.feedback-banner.correct-banner {
+  border-color: #4caf50;
+  background: linear-gradient(135deg, rgba(46, 125, 50, 0.15), var(--bg-stone));
+}
+
+.feedback-banner.wrong-banner {
+  border-color: #e53935;
+  background: linear-gradient(135deg, rgba(198, 40, 40, 0.15), var(--bg-stone));
+}
+
+.feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.feedback-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.feedback-xp-badge {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+}
+
+.feedback-explanation {
+  font-size: 0.95rem;
+  color: var(--text-parchment);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+/* Artifact Revealed Dossier Extra */
+.artifact-revealed-dossier {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.dossier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.dossier-item strong {
+  color: var(--gold-primary);
+  font-size: 0.85rem;
+  display: block;
+}
+
+.dossier-item span {
+  color: var(--text-parchment);
+  font-size: 0.9rem;
+}
+
+.btn-next-round {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   5. ANCIENT WORLD MAP (Leaflet View)
+   ========================================================================== */
+.map-view-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#world-map-container {
+  width: 100%;
+  height: 650px;
+  border-radius: 8px;
+  border: 1px solid var(--border-gold);
+  box-shadow: var(--shadow-ambient);
+  overflow: hidden;
+  background: #14120e;
+}
+
+/* Custom Leaflet Map Pin */
+.ancient-map-pin {
+  background: none;
+  border: none;
+}
+
+.pin-symbol-wrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pin-seal {
+  position: relative;
+  z-index: 2;
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
+  transition: transform 0.2s ease;
+}
+
+.pin-symbol-wrap:hover .pin-seal {
+  transform: scale(1.3);
+}
+
+.pin-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.35);
+  border: 1px solid var(--gold-bright);
+  animation: radarPulse 2.5s infinite;
+}
+
+/* Leaflet Popup Styling */
+.ancient-leaflet-popup .leaflet-popup-content-wrapper {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  color: var(--text-ivory);
+  border-radius: 6px;
+  box-shadow: var(--shadow-ambient);
+  padding: 0;
+  overflow: hidden;
+}
+
+.ancient-leaflet-popup .leaflet-popup-tip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+}
+
+.map-popup-card {
+  width: 270px;
+}
+
+.map-popup-img-wrap {
+  position: relative;
+  height: 130px;
+  overflow: hidden;
+}
+
+.map-popup-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.map-popup-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--gold-bright);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-gold);
+}
+
+.map-popup-body {
+  padding: 0.85rem;
+}
+
+.map-popup-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.25rem;
+}
+
+.map-popup-period {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.map-popup-sites {
+  font-size: 0.8rem;
+  color: var(--text-parchment);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.map-popup-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.8rem;
+  line-height: 1.35;
+}
+
+.map-explore-btn {
+  width: 100%;
+  background: var(--gold-primary);
+  color: #0c0a08;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: none;
+  padding: 0.45rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.map-explore-btn:hover {
+  background: var(--gold-bright);
+}
+
+/* ==========================================================================
+   6. EXPLORER ENCYCLOPEDIA LAYOUT
+   ========================================================================== */
+.explorer-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.explorer-sidebar {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1.2rem;
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.explorer-search-box input {
+  width: 100%;
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-ivory);
+  padding: 0.65rem 0.9rem;
+  border-radius: 4px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.explorer-search-box input:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+}
+
+.explorer-region-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.region-pill {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.region-pill:hover {
+  color: var(--gold-primary);
+  border-color: var(--border-gold);
+}
+
+.region-pill.active {
+  background: var(--gold-primary);
+  color: var(--bg-darkest);
+  border-color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.explorer-civ-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+
+.civ-list-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-stone);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-fast);
+}
+
+.civ-list-card:hover {
+  border-color: var(--border-gold);
+  background: var(--bg-card-hover);
+}
+
+.civ-list-card.active {
+  border-color: var(--gold-primary);
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.civ-list-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border-subtle);
+}
+
+.civ-list-name {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--text-ivory);
+  margin-bottom: 0.2rem;
+}
+
+.civ-list-meta {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+/* Explorer Main Dossier */
+.explorer-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.explorer-hero {
+  position: relative;
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-ambient);
+}
+
+.explorer-hero-img-wrap {
+  position: relative;
+  height: 380px;
+}
+
+.explorer-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.explorer-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(14, 12, 10, 0.2) 0%, rgba(14, 12, 10, 0.95) 100%);
+}
+
+.explorer-hero-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 2rem;
+}
+
+.explorer-tag {
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.explorer-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--text-ivory);
+  margin-bottom: 0.4rem;
+}
+
+.explorer-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  margin-bottom: 0.8rem;
+}
+
+.image-attribution {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.image-attribution a {
+  color: var(--gold-primary);
+  text-decoration: none;
+}
+
+.explorer-sections-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.explorer-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.5rem;
+  transition: var(--transition-fast);
+}
+
+.explorer-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: var(--shadow-gold);
+}
+
+.explorer-card.span-2 {
+  grid-column: span 2;
+}
+
+.card-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.8rem;
+}
+
+.card-body {
+  font-size: 0.95rem;
+  color: var(--text-parchment);
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.sites-tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.site-tag {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-light);
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.card-list {
+  list-style: square;
+  padding-left: 1.2rem;
+  color: var(--text-parchment);
+  font-size: 0.92rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.facts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.facts-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--text-parchment);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.facts-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--gold-primary);
+}
+
+/* ==========================================================================
+   7. ACHIEVEMENTS VIEW
+   ========================================================================== */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.achievement-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+  transition: var(--transition-normal);
+  position: relative;
+}
+
+.achievement-card.unlocked {
+  border-color: var(--gold-primary);
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), var(--bg-card));
+  box-shadow: var(--shadow-gold);
+}
+
+.achievement-card.locked {
+  opacity: 0.55;
+  filter: grayscale(0.85);
+}
+
+.achievement-icon-wrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--bg-stone);
+  border: 1px solid var(--border-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.achievement-card.unlocked .achievement-icon-wrap {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.achievement-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.3rem;
+}
+
+.achievement-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.achievement-reward {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   8. PLAYER PROFILE CODEX
+   ========================================================================== */
+.profile-codex {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-ambient);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  border-bottom: 1px solid var(--border-gold);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--bg-stone);
+  border: 2px solid var(--gold-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  box-shadow: var(--shadow-gold);
+}
+
+.profile-name-edit-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.profile-name {
+  font-size: 2rem;
+  color: var(--gold-bright);
+}
+
+.btn-edit-name {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.profile-rank {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold-light);
+  letter-spacing: 0.08em;
+}
+
+.profile-xp-bar-wrap {
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.xp-bar-bg {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 0.4rem;
+}
+
+.xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-primary), var(--gold-bright));
+  border-radius: 4px;
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+}
+
+.stat-box {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--gold-bright);
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   9. MODALS (Historian, Quest Complete, Daily Quest)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 620px;
+  box-shadow: var(--shadow-ambient);
+  overflow: hidden;
+  animation: modalScale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border-gold);
+  background: var(--bg-stone);
+}
+
+.modal-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--gold-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-close-btn:hover {
+  color: var(--text-ivory);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* Ask the Historian Chat Drawer / Modal */
+.historian-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.suggestion-chip {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-parchment);
+  padding: 0.6rem 0.9rem;
+  border-radius: 4px;
+  text-align: left;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.suggestion-chip:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-bright);
+}
+
+.historian-chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+  min-height: 120px;
+}
+
+.chat-bubble {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.chat-bubble.user-msg {
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--border-gold);
+  align-self: flex-end;
+  color: var(--gold-light);
+  max-width: 85%;
+}
+
+.chat-bubble.historian-msg {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  align-self: flex-start;
+  color: var(--text-parchment);
+  max-width: 95%;
+}
+
+.historian-input-wrap {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.historian-input-wrap input {
+  flex: 1;
+  background: var(--bg-stone);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-ivory);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  outline: none;
+}
+
+.historian-input-wrap input:focus {
+  border-color: var(--gold-primary);
+}
+
+/* Quest Complete Result Screen */
+.quest-complete-screen {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.result-seal {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: floatSubtle 3s ease-in-out infinite;
+}
+
+.result-title {
+  font-family: var(--font-decorative);
+  font-size: 2.4rem;
+  color: var(--gold-primary);
+  margin-bottom: 0.4rem;
+}
+
+.result-subtitle {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--text-parchment);
+  margin-bottom: 2rem;
+}
+
+.result-stats-board {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-gold);
+  border-radius: 6px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.result-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   10. TOAST NOTIFICATIONS (Achievements & Level-Ups)
+   ========================================================================== */
+#toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  pointer-events: none;
+}
+
+.ancient-toast {
+  background: var(--bg-stone);
+  border: 1px solid var(--gold-primary);
+  box-shadow: var(--shadow-gold-heavy);
+  padding: 1rem 1.4rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 300px;
+  max-width: 420px;
+  pointer-events: auto;
+  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-icon {
+  font-size: 2rem;
+}
+
+.toast-content h4 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--gold-bright);
+}
+
+.toast-content p {
+  font-size: 0.8rem;
+  color: var(--text-parchment);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .explorer-layout {
+    grid-template-columns: 1fr;
+  }
+  .explorer-sidebar {
+    position: static;
+    max-height: 400px;
+  }
+  .explorer-sections-grid {
+    grid-template-columns: 1fr;
+  }
+  .explorer-card.span-2 {
+    grid-column: span 1;
+  }
+  .arena-image-wrap {
+    height: 250px;
+  }
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}

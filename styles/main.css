@@ -1,0 +1,356 @@
+/**
+ * ChronoQuest - Main Archaeological Theme & CSS Design System
+ * Deep obsidian, dark museum stone, antique parchment & warm burnished gold accents.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cinzel+Decorative:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Obsidian & Basalt Stone Palettes */
+  --bg-darkest: #090807;
+  --bg-obsidian: #0e0c0a;
+  --bg-stone: #16120e;
+  --bg-card: #1f1a14;
+  --bg-card-hover: #29221b;
+  --bg-parchment: #f4ecdc;
+  --bg-parchment-dark: #dfcfb2;
+
+  /* Burnished Gold & Bronze Metals */
+  --gold-primary: #d4af37;
+  --gold-light: #f5e49e;
+  --gold-bright: #ffdf6d;
+  --gold-dark: #91721e;
+  --bronze-glow: rgba(212, 175, 55, 0.25);
+  --bronze-accent: #a07830;
+  --terracotta: #c25238;
+  --lapis: #1a426e;
+
+  /* Typography Colors */
+  --text-ivory: #fcf9f2;
+  --text-parchment: #e2d3bb;
+  --text-muted: #a6947a;
+  --text-dark: #1b1612;
+
+  /* Borders & Shadows */
+  --border-gold: rgba(212, 175, 55, 0.35);
+  --border-gold-glow: rgba(212, 175, 55, 0.65);
+  --border-subtle: rgba(166, 148, 122, 0.18);
+  --shadow-ambient: 0 16px 40px rgba(0, 0, 0, 0.85);
+  --shadow-gold: 0 0 25px rgba(212, 175, 55, 0.22);
+  --shadow-gold-heavy: 0 0 40px rgba(212, 175, 55, 0.45);
+
+  /* Fonts */
+  --font-display: 'Cinzel', 'Georgia', serif;
+  --font-decorative: 'Cinzel Decorative', 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Transitions */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--bg-darkest);
+  color: var(--text-ivory);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-obsidian);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(194, 82, 56, 0.04) 0%, transparent 40%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Background Canvas Layer */
+#particle-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* App Shell Layout */
+#app-root {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  color: var(--text-ivory);
+}
+
+.text-gold {
+  color: var(--gold-primary);
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+}
+
+.text-gold-light {
+  color: var(--gold-light);
+}
+
+.text-parchment {
+  color: var(--text-parchment);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Top Navigation Bar */
+.ancient-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(14, 12, 10, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-gold);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+  transition: var(--transition-normal);
+}
+
+.nav-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.brand-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-family: var(--font-decorative);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--gold-primary);
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.brand-tagline {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+/* Nav Menu Links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.nav-item-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-parchment);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: var(--transition-fast);
+  letter-spacing: 0.05em;
+}
+
+.nav-item-btn:hover {
+  color: var(--gold-bright);
+  background: rgba(212, 175, 55, 0.08);
+  border-color: var(--border-gold);
+}
+
+.nav-item-btn.active {
+  color: var(--bg-darkest);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
+  border-color: var(--gold-bright);
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+}
+
+/* Nav Actions (Audio, Historian, Profile) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-button {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-parchment);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: var(--transition-fast);
+}
+
+.icon-button:hover {
+  border-color: var(--gold-primary);
+  color: var(--gold-bright);
+  box-shadow: var(--shadow-gold);
+  transform: translateY(-2px);
+}
+
+.nav-profile-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, rgba(31, 26, 20, 0.9), rgba(22, 18, 14, 0.9));
+  border: 1px solid var(--border-gold);
+  padding: 0.35rem 0.85rem;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.nav-profile-chip:hover {
+  border-color: var(--gold-bright);
+  box-shadow: var(--shadow-gold);
+}
+
+.profile-chip-xp {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--gold-bright);
+  font-weight: 700;
+}
+
+.profile-chip-rank {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Mobile Nav Toggle */
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--border-gold);
+  color: var(--gold-primary);
+  font-size: 1.4rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Main Container Area */
+.view-container {
+  flex: 1;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* View Sections */
+.app-view {
+  display: none;
+  animation: fadeIn 0.35s ease-out;
+}
+
+.app-view.active {
+  display: block;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-obsidian);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-card-hover);
+  border: 1px solid var(--border-gold);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 980px) {
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-stone);
+    border-bottom: 2px solid var(--gold-primary);
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    box-shadow: var(--shadow-ambient);
+  }
+
+  .nav-links.mobile-open {
+    display: flex;
+  }
+
+  .nav-item-btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
